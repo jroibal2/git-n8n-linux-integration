@@ -1,0 +1,292 @@
+{
+  "name": "Git n8n Readme",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Git & n8n Readme on Linux Workflow\n\n## Objective: Integrate n8n and github to update readme for a project\n\n### Joaquin Roibal",
+        "height": 520,
+        "width": 1100
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -460,
+        -60
+      ],
+      "typeVersion": 1,
+      "id": "576d3167-5627-4999-b6b4-75e075bb9c05",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -660,
+        20
+      ],
+      "id": "7aa6ff1f-a7dd-4e2b-952c-8ee20cc89db3",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d940a6a-7e34-4b74-9182-719f129d227f",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "b2aaec1e-15be-4f9c-bbf5-97c057c5b199",
+              "name": "Summary",
+              "value": "={{ $json.data }} Updated with n8n workflow",
+              "type": "string"
+            },
+            {
+              "id": "8eb3ee68-5585-426f-bc23-5eab067d487e",
+              "name": "workflow_status",
+              "value": "Success",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -140,
+        80
+      ],
+      "id": "e2f2eb8c-c9e5-4d97-bbbb-53653040049e",
+      "name": "Set Initial Fields"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/Projects/git-n8n-linux-integration/README_BASIC_TEMPLATE.md",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        0,
+        80
+      ],
+      "id": "6e3b4c30-e5c9-4283-9230-e6ab1250aa13",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        140,
+        80
+      ],
+      "id": "607627b3-c784-4c63-aa2d-6a3f187718e9",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the template from the previous file node\nconst template = $json[\"data\"];\n\n// Get variables from Set node\nconst vars = {\n  timestamp: $('Set Initial Fields').first().json.timestamp,\n  update_summary: $('Set Initial Fields').first().json.Summary,\n  workflow_status: $('Set Initial Fields').first().json.workflow_status\n};\n\n// Replace placeholders in template\nlet output = template;\nfor (const [key, value] of Object.entries(vars)) {\n  const regex = new RegExp(`{{\\\\s*${key}\\\\s*}}`, 'g');\n  output = output.replace(regex, value);\n}\n\nreturn [{ json: { updated_readme: output } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        80
+      ],
+      "id": "598b195c-466d-48f8-adfc-351b14ebfbf3",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "updated_readme",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -100,
+        300
+      ],
+      "id": "813a0bae-702a-4371-835a-f6b19cf59ddc",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/Projects/git-n8n-linux-integration/README.md",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        80,
+        300
+      ],
+      "id": "7781a4c7-532d-4e93-af38-8f3ffd577744",
+      "name": "Update README.md"
+    },
+    {
+      "parameters": {
+        "command": "cd /files/Projects/git-n8n-linux-integration && \\\ngit add README.md && \\\ngit commit -m \"Updated README via n8n on Linux Mint\" && \\\ngit push"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "id": "9ec0e9e7-a5ab-4db2-904a-c736881221ae",
+      "name": "Commit to Gitub"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        140
+      ],
+      "id": "8cd03c9a-0bc6-4d52-a06f-5860ca834a54",
+      "name": "Load Text for Summary"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/Projects/git-n8n-linux-integration/NEW_OUTPUT.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        140
+      ],
+      "id": "d0ff91f1-f393-4535-a76b-a811425774c0",
+      "name": "Load Summary"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Load Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Initial Fields": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Update README.md",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update README.md": {
+      "main": [
+        [
+          {
+            "node": "Commit to Gitub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Text for Summary": {
+      "main": [
+        [
+          {
+            "node": "Set Initial Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Summary": {
+      "main": [
+        [
+          {
+            "node": "Load Text for Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "30b4d2dc-2976-46b5-91e6-e87c72a867ab",
+  "meta": {
+    "instanceId": "4031dff8234ae2da54e644aef10c8b54469b0489a59a3a08665fb4783de10458"
+  },
+  "id": "A0n7b1baGRlLO7LJ",
+  "tags": []
+}
