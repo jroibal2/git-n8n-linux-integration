@@ -41,10 +41,10 @@ This setup is ideal for:
 ```bash
 git clone git@github.com:jroibal2/git-n8n-linux-integration.git
 cd git-n8n-linux-integration
-```bash
+```
  Updated with n8n workflow
 
-- Timestamp: 2025-07-20T21:05:08.672Z
+- Timestamp: 2025-07-20T21:08:30.563Z
 
 ## Purpose:
 This file is automatically updated by a local n8n workflow to track updates made on this project.
