@@ -1,7 +1,7 @@
 # Git + n8n Integration on Linux
 
 ## Latest Update:
-- Timestamp: 2025-07-20T20:17:48.899Z
+- Timestamp: 2025-07-20T20:22:06.042Z
 - Summary: 
 
 # Git + GitHub Integration with n8n on Docker (Linux Mint)
@@ -39,7 +39,7 @@ This setup is ideal for:
 ### 1. Clone This Repo
 
 ```bash
-git clone git@github.com:your-username/git-n8n-linux-integration.git
+git clone git@github.com:jroibal2/git-n8n-linux-integration.git
 cd git-n8n-linux-integration
  Updated with n8n workflow
 
