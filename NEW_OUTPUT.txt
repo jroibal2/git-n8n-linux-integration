@@ -1,9 +1,3 @@
-# Git + n8n Integration on Linux
-
-## Latest Update:
-
-- Summary: 
-
 # Git + GitHub Integration with n8n on Docker (Linux Mint)
 
 This project demonstrates how to automate GitHub commits from a **Dockerized** n8n workflow running on a **Linux Mint** machine. By integrating Git with n8n, you can auto-generate and push updates (like a README.md file) based on dynamic data or triggers.
@@ -12,7 +6,7 @@ This repo includes:
 - A fully working `n8n` workflow export
 - A dynamic README template (`README_BASIC_TEMPLATE.md`)
 - A guide for SSH + Git configuration inside Docker
-- [Companion YouTube video walkthrough for git n8n linux](https://youtu.be/ycr7edVihu0)
+- Companion YouTube video walkthrough
 
 ---
 
@@ -42,19 +36,3 @@ This setup is ideal for:
 git clone git@github.com:jroibal2/git-n8n-linux-integration.git
 cd git-n8n-linux-integration
 ```
- Updated with n8n workflow
-
-- Timestamp: 2025-07-21T13:15:14.781Z
-
-## Purpose:
-This file is automatically updated by a local n8n workflow to track updates made on this project.
-
-## System Info:
-- Host: Linux Mint
-- n8n Version: {{n8n_version}}
-
-## Automation Status:
-- Last Run: {{last_run}}
-- Workflow Status: Success
-
-✅ Success / ❌ Failed
